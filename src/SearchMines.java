@@ -1,43 +1,69 @@
 import java.util.Random;
 
 public class SearchMines {
-    private Cell[][] board;
-    private int width;
-    private int height;
-    private int minesAmount;
-    private Random choosen;
+
+    private final int DEFAULT_COLUMNS = 5;
+    private final int DEFAULT_ROWS = 5;
+    private int MAX_MINES_AMOUNT;
+    private final int IS_MINE_PROBABILITY = 3;
+    private final double MAX_MINES_PERCENT = 0.4;
+    private int columns;
+    private int rows;
+    private Cell board;
 
     public SearchMines(){
-        this.width = 5;
-        this.height = 5;
-        board = new Cell[5][5];
-        minesAmount = (int) Math.floor((width*height)*0.3);
-        choosen = new Random();
-    }//End constructor
+        columns = DEFAULT_COLUMNS;
+        rows = DEFAULT_ROWS;
+        MAX_MINES_AMOUNT = (int) (columns * rows * MAX_MINES_PERCENT);
+    }//End Constructor
 
-    public SearchMines(final int width, final int height){
-        this.width = width;
-        this.height = height;
-        board = new Cell[width][height];
-        minesAmount = (int) Math.floor((width*height)*0.3);
-        choosen = new Random();
-    }//End constructor
+    public SearchMines(int w, int h){
+        columns = w;
+        rows = h;
+        MAX_MINES_AMOUNT = (int) (columns * rows * MAX_MINES_PERCENT);
+    }//End Constructor
 
     public void createBoard(){
-        int minesPlanted = 0;
-        while(minesPlanted < minesAmount){
-
-        }//End while
+        Random chosen = new Random();
+        board = new Cell(chosen.nextInt(IS_MINE_PROBABILITY) == 1);
+        createBoard(null, board,chosen,0);
     }//End createBoard
 
-    private int fillCells(){
-        int minesPlanted = 0;
-        for(int i = 0; i < width; i++)
-            for(int j = 0; j < height; j++){
-                if( choosen.nextInt(2) == 1) {
-                    board[i][j] = new Cell(true);
-                }//End if
-            }//End for
-        return 0;
-    }//End fillCells
+    private void createBoard(Cell currentAbove, Cell current, Random chosen,int rows){
+        Cell firstColumn = current;
+        for(int i = 1; i < columns; i++){
+            Cell toAdd = new Cell(chosen.nextInt(IS_MINE_PROBABILITY) == 1);
+            current.setRight(toAdd);
+            toAdd.setLeft(current);
+            if(currentAbove != null){
+                toAdd.setUp(currentAbove.getRight());
+                currentAbove.getRight().setDown(toAdd);
+                currentAbove = toAdd.getUp();
+            }//End if
+            current = toAdd;
+        }//End for
+        rows++;
+        if(rows < this.rows){
+            Cell newRow = new Cell(chosen.nextInt(IS_MINE_PROBABILITY) == 1);
+            firstColumn.setDown(newRow);
+            newRow.setUp(firstColumn);
+            createBoard(firstColumn,newRow,chosen,rows);
+        }//End if
+    }//End createBoard
+
+    public int getWidth() {
+        return columns;
+    }
+
+    public void setWidth(int width) {
+        this.columns = width;
+    }
+
+    public int getHeight() {
+        return rows;
+    }
+
+    public void setHeight(int height) {
+        this.rows = height;
+    }
 }//End searchMines class
