@@ -1,3 +1,5 @@
+package model;
+
 public class Cell {
 
     private Cell up;
@@ -63,4 +65,4 @@ public class Cell {
     public void setAmountMinesClose(int amountMinesClose) {
         this.amountMinesClose = amountMinesClose;
     }
-}//End Cell Class
+}//End model.Cell Class

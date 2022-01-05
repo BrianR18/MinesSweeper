@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Random;
 
 public class SearchMines {
@@ -65,5 +67,26 @@ public class SearchMines {
 
     public void setHeight(int height) {
         this.rows = height;
+    }
+
+    public Cell getBoard(){
+        return board;
+    }//End getBoard
+
+    @Override
+    public String toString(){
+        String a = "";
+        Cell current = board;
+        Cell firstC = board;
+        for(int i = 0; i < getWidth(); i++){
+            for(int j = 0; j < getHeight(); j++){
+                a += current.isMines()?" ":"#";
+                current = current.getRight();
+            }//End for
+            a += "\n";
+            current = firstC.getDown();
+            firstC = current;
+        }
+        return a;
     }
 }//End searchMines class
