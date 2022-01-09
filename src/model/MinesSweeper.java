@@ -2,7 +2,7 @@ package model;
 
 import java.util.Random;
 
-public class SearchMines {
+public class MinesSweeper {
 
     private final int DEFAULT_COLUMNS = 5;
     private final int DEFAULT_ROWS = 5;
@@ -13,13 +13,13 @@ public class SearchMines {
     private int rows;
     private Cell board;
 
-    public SearchMines(){
+    public MinesSweeper(){
         columns = DEFAULT_COLUMNS;
         rows = DEFAULT_ROWS;
         MAX_MINES_AMOUNT = (int) (columns * rows * MAX_MINES_PERCENT);
     }//End Constructor
 
-    public SearchMines(int w, int h){
+    public MinesSweeper(int w, int h){
         columns = w;
         rows = h;
         MAX_MINES_AMOUNT = (int) (columns * rows * MAX_MINES_PERCENT);
