@@ -1,6 +1,9 @@
 package model;
 
-public class Cell {
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+
+public class Cell extends Rectangle {
 
     private Cell up;
     private Cell down;
@@ -10,6 +13,25 @@ public class Cell {
     private int amountMinesClose;
 
     public Cell(boolean m){
+        super();
+        mines = m;
+        amountMinesClose = 0;
+    }//End constructor
+
+    public Cell(boolean m, double width, double height){
+        super(width,height);
+        mines = m;
+        amountMinesClose = 0;
+    }//End constructor
+
+    public Cell(boolean m, double width, double height, Paint fill){
+        super(width,height,fill);
+        mines = m;
+        amountMinesClose = 0;
+    }//End constructor
+
+    public Cell(boolean m, double width, double height, double x, double y){
+        super(x,y,width,height);
         mines = m;
         amountMinesClose = 0;
     }//End constructor

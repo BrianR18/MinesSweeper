@@ -13,7 +13,7 @@ public class Main extends Application {
     private MinesSweeper ms;
 
     public Main(){
-        ms = new MinesSweeper(30,30);
+        ms = new MinesSweeper(5,5);
         gc = new GameController(ms);
     }
 
